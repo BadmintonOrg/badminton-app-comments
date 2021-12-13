@@ -8,4 +8,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY --from=build ./app/api/target/badminton-app-comments-api-1.0-SNAPSHOT.jar /app
 EXPOSE 8080
-CMD ["java", "-jar", "badminton-app-comemnts-api-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "badminton-app-comments-api-1.0-SNAPSHOT.jar"]
