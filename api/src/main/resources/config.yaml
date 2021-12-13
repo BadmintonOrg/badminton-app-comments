@@ -1,0 +1,17 @@
+kumuluzee:
+  name: badminton-app-comments
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8080
+    http:
+      port: 8080
+  datasources:
+    - jndi-name: jdbc/BadmintonAppUsersDS
+      connection-url: jdbc:postgresql://database-1.ctekqcytce4y.eu-central-1.rds.amazonaws.com/badminton
+      username: postgres
+      password: postgres
+rest-properties:
+  maintenance-mode: false
+  broken: false
