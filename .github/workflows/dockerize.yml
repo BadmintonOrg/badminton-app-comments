@@ -36,4 +36,4 @@ jobs:
       with:
         file: ./Dockerfile_with_maven_build
         push: true
-        tags: jbozic04/badminton-app-comments:${{ steps.time.outputs.time }}
+        tags: cesarmarti/badminton-app-comments:${{ steps.time.outputs.time }}
