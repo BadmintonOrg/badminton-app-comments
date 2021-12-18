@@ -9,6 +9,7 @@ import models.entities.CommentEntity;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
@@ -21,6 +22,17 @@ public class CommentBean {
 
     @Inject
     private EntityManager em;
+
+    public List<Comment> getComments() {
+
+        TypedQuery<CommentEntity> query = em.createNamedQuery(
+                "CommentEntity.getAll", CommentEntity.class);
+
+        List<CommentEntity> resultList = query.getResultList();
+
+        return resultList.stream().map(CommentConverter::toDto).collect(Collectors.toList());
+
+    }
 
     public List<Comment> getComments(UriInfo uriInfo) {
 
