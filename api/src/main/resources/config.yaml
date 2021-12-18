@@ -9,9 +9,14 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/BadmintonAppUsersDS
-      connection-url: ${{ secrets.POSTGRES_URL }}
-      username: ${{ secrets.POSTGRES_NAME }}
-      password: ${{ secrets.POSTGRES_PASS }}
+      connection-url: jdbc:postgresql://database-1.ctekqcytce4y.eu-central-1.rds.amazonaws.com/badminton
+      username: postgres
+      password: postgres
+  rest-client:
+    registrations:
+      - class: profanity-api
+        url: http://www.purgomalum.com/service
+        read-timeout: 5000
 rest-properties:
   maintenance-mode: false
   broken: false

@@ -23,6 +23,18 @@ public class CommentEntity {
         @Column(name = "content")
         private String content;
 
+        @Column(name = "profanity")
+        private boolean profanity;
+
+        public boolean getProfanity() {
+                return profanity;
+        }
+
+        public void setProfanity(boolean prof) {
+                this.profanity = prof;
+        }
+
+
         public Integer getId() {
                 return id;
         }

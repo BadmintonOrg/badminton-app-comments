@@ -39,6 +39,16 @@
             <artifactId>kumuluzee-rest-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.kumuluz.ee.rest-client</groupId>
+            <artifactId>kumuluzee-rest-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.microprofile.rest.client</groupId>
+            <artifactId>microprofile-rest-client-api</artifactId>
+            <version>1.4.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.json</groupId>
