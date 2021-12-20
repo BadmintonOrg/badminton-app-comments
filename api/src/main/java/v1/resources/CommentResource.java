@@ -1,6 +1,15 @@
 package v1.resources;
 
 import lib.Comment;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import services.beans.CommentBean;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +35,13 @@ public class CommentResource {
     @Context
     protected UriInfo uriInfo;
 
+    @Operation(description = "Get all comments in a list", summary = "Get all comments")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "List of comments",
+                    content = @Content(schema = @Schema(implementation = Comment.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Number of objects in list")}
+            )})
     @GET
     public Response getComments() {
 
@@ -34,9 +50,17 @@ public class CommentResource {
         return Response.status(Response.Status.OK).entity(comments).build();
     }
 
+    @Operation(description = "Get data for a comments.", summary = "Get data for a comment")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "Comment",
+                    content = @Content(
+                            schema = @Schema(implementation = Comment.class))
+            )})
     @GET
     @Path("/{commentId}")
-    public Response getComment(@PathParam("commentId") Integer courtId) {
+    public Response getComment(@Parameter(description = "Comment ID.", required = true)
+                                   @PathParam("commentId") Integer courtId) {
 
         Comment comm = commentBean.getComment(courtId);
 
@@ -47,8 +71,18 @@ public class CommentResource {
         return Response.status(Response.Status.OK).entity(comm).build();
     }
 
+    @Operation(description = "Add comment.", summary = "Add comment")
+    @APIResponses({
+            @APIResponse(responseCode = "201",
+                    description = "Comment successfully added."
+            ),
+            @APIResponse(responseCode = "405", description = "Validation error .")
+    })
     @POST
-    public Response createComment(Comment comm) {
+    public Response createComment(@RequestBody(
+            description = "DTO object with comment data.",
+            required = true, content = @Content(
+            schema = @Schema(implementation = Comment.class))) Comment comm) {
 
         //check for profanity with external api
         if (comm.getCourt() == null || comm.getCourt() == null || comm.getContent() == null ) {
@@ -62,9 +96,21 @@ public class CommentResource {
 
     }
 
+    @Operation(description = "Delete comment.", summary = "Delete comment")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Comment successfully deleted."
+            ),
+            @APIResponse(
+                    responseCode = "404",
+                    description = "Not found."
+            )
+    })
     @DELETE
     @Path("{commentId}")
-    public Response deleteComment(@PathParam("commentId") Integer commentId){
+    public Response deleteComment(@Parameter(description = "Comment ID.", required = true)
+                                      @PathParam("commentId") Integer commentId){
 
         boolean deleted = commentBean.deleteComment(commentId);
 
@@ -76,10 +122,21 @@ public class CommentResource {
         }
     }
 
+    @Operation(description = "Update data for a comment.", summary = "Update comment")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Comment successfully updated."
+            )
+    })
     @PUT
     @Path("{commentId}")
-    public Response putComment(@PathParam("commentId") Integer commentId,
-                             Comment comm){
+    public Response putComment(@Parameter(description = "Comment ID.", required = true)
+                                   @PathParam("commentId") Integer commentId,
+                               @RequestBody(
+                                       description = "DTO object with comment data.",
+                                       required = true, content = @Content(
+                                       schema = @Schema(implementation = Comment.class))) Comment comm){
 
         comm = commentBean.putComment(commentId, comm);
 
