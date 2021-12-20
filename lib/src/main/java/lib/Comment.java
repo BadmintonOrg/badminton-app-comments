@@ -7,6 +7,16 @@ public class Comment {
     private String content;
     private boolean profanity;
 
+    public User getUserObj() {
+        return userObj;
+    }
+
+    public void setUserObj(User userObj) {
+        this.userObj = userObj;
+    }
+
+    private User userObj;
+
     public boolean getProfanity() {
         return profanity;
     }
