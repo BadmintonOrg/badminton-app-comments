@@ -107,7 +107,7 @@ public class CommentBean {
         WebTarget service = target.get().path("v1/users");
         log.log(Level.INFO,String.valueOf(service.getUri()));
         try {
-            HttpGet request = new HttpGet(String.valueOf("http://20.121.249.5:8080/v1/users") + "?filter=id:EQ:" + id);
+            HttpGet request = new HttpGet(String.valueOf(service.getUri()) + "?filter=id:EQ:" + id);
             HttpResponse response = httpClient.execute(request);
             int status = response.getStatusLine().getStatusCode();
             if (status >= 200 && status < 300) {
