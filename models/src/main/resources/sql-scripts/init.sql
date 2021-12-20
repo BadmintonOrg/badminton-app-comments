@@ -1,2 +1,2 @@
-insert into badminton_comments (user_id,court_id,content) values (1,1,'Testni komentar, ja ta court je ful kul.')
+insert into badminton_comments (user_id,court_id,content,profanity) values (1,1,'Testni komentar, ja ta court je ful kul.',false)
 update badminton_comments SET id = 1 where content = 'Testni komentar, ja ta court je ful kul.'

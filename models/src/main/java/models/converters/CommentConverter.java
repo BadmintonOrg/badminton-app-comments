@@ -12,6 +12,7 @@ public class CommentConverter {
         dto.setCourt(entity.getCourt());
         dto.setUser(entity.getUser());
         dto.setId(entity.getId());
+        dto.setProfanity(entity.getProfanity());
 
         return dto;
 
@@ -24,6 +25,7 @@ public class CommentConverter {
         entity.setContent(dto.getContent());
         entity.setCourt(dto.getCourt());
         entity.setUser(dto.getUser());
+        entity.setProfanity(dto.getProfanity());
         return entity;
 
     }

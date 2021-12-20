@@ -22,6 +22,12 @@
 
         <postgresql.version>42.3.0</postgresql.version>
 
+        <kumuluzee-rest-client.version>1.4.1.2</kumuluzee-rest-client.version>
+        <kumuluzee-cors.version>1.0.6</kumuluzee-cors.version>
+        <kumuluzee-graphql.version>1.1.0</kumuluzee-graphql.version>
+
+        <kumuluzee-discovery.version>1.1.1</kumuluzee-discovery.version>
+        <httpclient.version>4.5.3</httpclient.version>
     </properties>
 
     <modules>
@@ -54,8 +60,20 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.discovery</groupId>
+                <artifactId>kumuluzee-discovery-etcd</artifactId>
+                <version>${kumuluzee-discovery.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.kumuluz.ee.config</groupId>
-                <artifactId>kumuluzee-config-consul</artifactId>
+                <artifactId>kumuluzee-config-etcd</artifactId>
                 <version>${kumuluzee-config.version}</version>
             </dependency>
 
@@ -75,6 +93,30 @@
                 <groupId>com.kumuluz.ee.openapi</groupId>
                 <artifactId>kumuluzee-openapi-mp-ui</artifactId>
                 <version>${kumuluzee-openapi-mp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.cors</groupId>
+                <artifactId>kumuluzee-cors</artifactId>
+                <version>${kumuluzee-cors.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.graphql</groupId>
+                <artifactId>kumuluzee-graphql</artifactId>
+                <version>${kumuluzee-graphql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.graphql</groupId>
+                <artifactId>kumuluzee-graphql-ui</artifactId>
+                <version>${kumuluzee-graphql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.rest-client</groupId>
+                <artifactId>kumuluzee-rest-client</artifactId>
+                <version>${kumuluzee-rest-client.version}</version>
             </dependency>
 
             <dependency>

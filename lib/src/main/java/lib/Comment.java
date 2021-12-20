@@ -5,6 +5,25 @@ public class Comment {
     private Integer user;
     private Integer court;
     private String content;
+    private boolean profanity;
+
+    public User getUserObj() {
+        return userObj;
+    }
+
+    public void setUserObj(User userObj) {
+        this.userObj = userObj;
+    }
+
+    private User userObj;
+
+    public boolean getProfanity() {
+        return profanity;
+    }
+
+    public void setProfanity(boolean prof) {
+        this.profanity = prof;
+    }
 
     public Integer getId() {
         return id;
