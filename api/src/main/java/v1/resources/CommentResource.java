@@ -1,5 +1,6 @@
 package v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import lib.Comment;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -26,6 +27,7 @@ import java.util.logging.Logger;
 @Path("/comments")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
 public class CommentResource {
     private Logger log = Logger.getLogger(CommentResource.class.getName());
 
