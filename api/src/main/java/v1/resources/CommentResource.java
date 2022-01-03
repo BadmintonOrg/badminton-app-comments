@@ -1,5 +1,7 @@
 package v1.resources;
 
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
+import com.kumuluz.ee.logs.cdi.Log;
 import lib.Comment;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -22,10 +24,12 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Log
 @ApplicationScoped
 @Path("/comments")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS, PUT")
 public class CommentResource {
     private Logger log = Logger.getLogger(CommentResource.class.getName());
 
@@ -45,8 +49,10 @@ public class CommentResource {
     @GET
     public Response getComments() {
 
+        log.info("Get all comments.");
         List<Comment> comments = commentBean.getComments(uriInfo);
 
+        log.info("Returning comments.");
         return Response.status(Response.Status.OK).entity(comments).build();
     }
 
@@ -60,14 +66,17 @@ public class CommentResource {
     @GET
     @Path("/{commentId}")
     public Response getComment(@Parameter(description = "Comment ID.", required = true)
-                                   @PathParam("commentId") Integer courtId) {
+                                   @PathParam("commentId") Integer commentId) {
 
-        Comment comm = commentBean.getComment(courtId);
+        log.info("Get info for comment with id " + commentId);
+        Comment comm = commentBean.getComment(commentId);
 
         if (comm == null) {
+            log.info("No comment found.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
+        log.info("Returning data for comment with id " + commentId);
         return Response.status(Response.Status.OK).entity(comm).build();
     }
 
@@ -85,13 +94,16 @@ public class CommentResource {
             schema = @Schema(implementation = Comment.class))) Comment comm) {
 
         //check for profanity with external api
+        log.info("Called method for new comment");
         if (comm.getCourt() == null || comm.getCourt() == null || comm.getContent() == null ) {
+            log.info("New comment not added. Bad request.");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         else {
             comm = commentBean.createComemnt(comm);
         }
 
+        log.info("New comment added");
         return Response.status(Response.Status.CREATED).entity(comm).build();
 
     }
@@ -112,12 +124,15 @@ public class CommentResource {
     public Response deleteComment(@Parameter(description = "Comment ID.", required = true)
                                       @PathParam("commentId") Integer commentId){
 
+        log.info("Called method to delete organization");
         boolean deleted = commentBean.deleteComment(commentId);
 
         if (deleted) {
+            log.info("Comment not deleted. Bad request.");
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         else {
+            log.info("Deleted comment with id " + commentId);
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -138,11 +153,16 @@ public class CommentResource {
                                        required = true, content = @Content(
                                        schema = @Schema(implementation = Comment.class))) Comment comm){
 
+        log.info("Called method to update comment");
+
         comm = commentBean.putComment(commentId, comm);
 
         if (comm == null) {
+            log.info("Comment not updated. Bad request.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+
+        log.info("Updated comment with id " + commentId);
 
         return Response.status(Response.Status.NOT_MODIFIED).build();
 
